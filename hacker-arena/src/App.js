@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import fire from './firebase';
-import fillDb from './fillDb'
+import fire from './Firebase/firebase';
+import fillDb from './Firebase/fillDb'
 import './Styles/App.css';
 
 class App extends Component {
