@@ -21,7 +21,7 @@ import PairCreateGameRoom from './Containers/Pair/PairCreateGameRoom';
 import Random from './Components/Random.js'
 import PairGameRoom from './Containers/Pair/PairGameRoom';
 
-import { checkIfUserIsAdminAsync } from './Helpers/authHelpers'
+// import { checkIfUserIsAdminAsync } from './Helpers/authHelpers'
 
 import Solo from './Containers/Solo/CreateSolo';
 import SoloRoom from './Containers/Solo/SoloRoom';
@@ -183,28 +183,19 @@ fire.auth().onAuthStateChanged(function(user) {
   </Provider>
   );
 
-  if (user) {
-    checkIfUserIsAdminAsync(user.uid)
-    .then(payload => {
-      const { adminStatus, username } = payload;
-      
-      user.adminStatus = adminStatus || false;
-      user.username = username || fire.auth().currentUser.email.split('@')[0];
+  if (user) {      
+    user.adminStatus = false;
+    user.username = fire.auth().currentUser.email.split('@')[0];
 
-      user.updateProfile(user);
-      store.dispatch(updateCurrentUser(user));
-      currentUser = store.getState().currentUser;
+    user.updateProfile(user);
+    store.dispatch(updateCurrentUser(user));
+    currentUser = store.getState().currentUser;
 
-      // render 
-      ReactDOM.render(
-        app,
-        document.getElementById('root')
-      );
-
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    // render 
+    ReactDOM.render(
+      app,
+      document.getElementById('root')
+    );
   } else {
     user = {};
     store.dispatch(updateCurrentUser(user));
